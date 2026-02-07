@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import cross_val_score
+import matplotlib.pyplot as plt
 
 """
 Loading Data
@@ -83,3 +84,9 @@ print(scores)
 print(scores.mean())
 
 print(data.corr()["level"].sort_values(ascending=False))
+
+import shap
+explainer = shap.Explainer(model, X_train)
+shap_values = explainer(X_test)
+shap.summary_plot(shap_values, X_test)
+shap.plots.waterfall(shap_values[0, :, 0])
